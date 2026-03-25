@@ -4,9 +4,6 @@ export { TestTransactionModule } from './test-transaction.module';
 // Helper
 export { TestTransactionHelper } from './test-transaction.helper';
 
-// SafetyGuard (for custom validation scenarios)
-export { SafetyGuard } from './safety-guard';
-
 // Interfaces
 export type {
   TestTransactionModuleOptions,

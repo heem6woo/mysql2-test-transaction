@@ -1,6 +1,5 @@
 import type { Pool, PoolConnection } from 'mysql2/promise';
 import type { ModuleRef } from '@nestjs/core';
-import { SafetyGuard } from './safety-guard';
 import { createConnectionProxy } from './connection-proxy';
 import type { ResolvedOptions } from './interfaces/module-options.interface';
 
@@ -29,7 +28,6 @@ export class TestTransactionHelper {
   private conn: PoolConnection | null = null;
   private proxiedConn: PoolConnection | null = null;
   private _isActive = false;
-  private validated = false;
 
   // Original pool methods saved for restore
   private originalGetConnection: Pool['getConnection'] | null = null;
@@ -66,12 +64,6 @@ export class TestTransactionHelper {
     }
 
     const pool = this.resolvePool();
-
-    // 첫 호출 시에만 SafetyGuard 검증
-    if (!this.validated) {
-      SafetyGuard.validate(pool, this.options);
-      this.validated = true;
-    }
 
     this.log('Starting test transaction...');
 
